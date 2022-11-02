@@ -11,4 +11,4 @@ CREATE TABLE IF NOT EXISTS auto_post (
       auto_user_id INT NOT NULL REFERENCES auto_user(id) ON DELETE CASCADE
     );
 
-CREATE UNIQUE INDEX IF NOT EXISTS uq_auto_user_login ON auto_user(lower(trim(login)));
+CREATE UNIQUE INDEX IF NOT EXISTS uq_auto_user_login ON auto_user(lower(trim(login)) ASC);
