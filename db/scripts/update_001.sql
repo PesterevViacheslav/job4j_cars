@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS auto_user (
      login      TEXT NOT NULL,
      password   TEXT NOT NULL
 );
+
 CREATE UNIQUE INDEX IF NOT EXISTS uq_auto_user_login ON auto_user(lower(trim(login)));
 
 CREATE TABLE IF NOT EXISTS auto_post (
