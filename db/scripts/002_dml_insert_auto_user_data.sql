@@ -1,3 +1,3 @@
 INSERT INTO auto_user (login, password) VALUES ('Ivanov', 'root'),
                                                ('Petrov', 'root'),
-                                               ('Sidorov', 'root');
+                                               ('Sidorov', 'root') ON CONFLICT DO NOTHING;

@@ -15,7 +15,7 @@ public class UserRepository {
      * @param user пользователь.
      * @return пользователь с id.
      */
-    public Optional<User> create(User user) {
+    public User create(User user) {
         Session session = sf.openSession();
         try {
             session.beginTransaction();
@@ -24,8 +24,10 @@ public class UserRepository {
         } catch (Exception e) {
             e.printStackTrace();
             session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
-        return findByLogin(user.getLogin());
+        return user;
     }
     /**
      * Обновить в базе пользователя.
@@ -44,6 +46,8 @@ public class UserRepository {
         } catch (Exception e) {
             e.printStackTrace();
             session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
     }
     /**
@@ -62,6 +66,8 @@ public class UserRepository {
         } catch (Exception e) {
             e.printStackTrace();
             session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
     }
     /**
@@ -70,8 +76,12 @@ public class UserRepository {
      */
     public List<User> findAllOrderById() {
         Session session = sf.openSession();
-        Query query = session.createQuery("from ru.job4j.cars.model.User order by id", User.class);
-        return query.list();
+        try {
+            Query query = session.createQuery("from ru.job4j.cars.model.User order by id", User.class);
+            return query.list();
+        } finally {
+            session.close();
+        }
     }
     /**
      * Найти пользователя по ID
@@ -79,10 +89,14 @@ public class UserRepository {
      */
     public Optional<User> findById(int id) {
         Session session = sf.openSession();
-        Query query = session.createQuery("from ru.job4j.cars.model.User where id = :paramId", User.class);
-        query.setParameter("paramId", id);
-        System.out.println(query.uniqueResult());
-        return query.uniqueResult() == null ? Optional.empty() : Optional.of((User) query.uniqueResult());
+        try {
+            Query query = session.createQuery("from ru.job4j.cars.model.User where id = :paramId", User.class);
+            query.setParameter("paramId", id);
+            System.out.println(query.uniqueResultOptional());
+            return query.uniqueResultOptional();
+        } finally {
+            session.close();
+        }
     }
     /**
      * Список пользователей по login LIKE %key%
@@ -91,9 +105,13 @@ public class UserRepository {
      */
     public List<User> findByLikeLogin(String key) {
         Session session = sf.openSession();
-        Query query = session.createQuery("from ru.job4j.cars.model.User where login like :paramLogin", User.class);
-        query.setParameter("paramLogin", "%" + key + "%");
-        return query.list();
+        try {
+            Query query = session.createQuery("from ru.job4j.cars.model.User where login like :paramLogin", User.class);
+            query.setParameter("paramLogin", "%" + key + "%");
+            return query.list();
+        } finally {
+            session.close();
+        }
     }
     /**
      * Найти пользователя по login.
@@ -102,9 +120,13 @@ public class UserRepository {
      */
     public Optional<User> findByLogin(String login) {
         Session session = sf.openSession();
-        Query query = session.createQuery("from ru.job4j.cars.model.User where login = :paramLogin", User.class);
-        query.setParameter("paramLogin", login);
-        System.out.println(query.uniqueResult());
-        return query.uniqueResult() == null ? Optional.empty() : Optional.of((User) query.uniqueResult());
+        try {
+            Query query = session.createQuery("from ru.job4j.cars.model.User where login = :paramLogin", User.class);
+            query.setParameter("paramLogin", login);
+            System.out.println(query.uniqueResultOptional());
+            return query.uniqueResultOptional();
+        } finally {
+            session.close();
+        }
     }
 }

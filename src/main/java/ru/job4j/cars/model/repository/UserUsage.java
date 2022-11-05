@@ -16,19 +16,20 @@ public class UserUsage {
             usr.setLogin("admin");
             usr.setPassword("admin");
             var user = userRepository.create(usr);
+            System.out.println("USERRRRR=" + user);
             userRepository.findAllOrderById()
                     .forEach(System.out::println);
             userRepository.findByLikeLogin("e")
                     .forEach(System.out::println);
-            userRepository.findById(user.get().getId())
+            userRepository.findById(user.getId())
                     .ifPresent(System.out::println);
             userRepository.findByLogin("admin")
                     .ifPresent(System.out::println);
-            user.get().setPassword("password");
-            userRepository.update(user.get());
-            userRepository.findById(user.get().getId())
+            user.setPassword("password");
+            userRepository.update(user);
+            userRepository.findById(user.getId())
                     .ifPresent(System.out::println);
-            userRepository.delete(user.get().getId());
+            userRepository.delete(user.getId());
             userRepository.findAllOrderById()
                     .forEach(System.out::println);
         } finally {
