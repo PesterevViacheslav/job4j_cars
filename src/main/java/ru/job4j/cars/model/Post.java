@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 /**
  * Class Post - Объявление. Решение задач уровня Middle.
@@ -32,5 +33,5 @@ public class Post {
     private User user;
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "post_id")
-    private List<PriceHistory> priceHistory;
+    private List<PriceHistory> priceHistory = new ArrayList<>();
 }
