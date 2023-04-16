@@ -1,0 +1,1 @@
+INSERT INTO car (name, engine_id) VALUES ('Волга', 1), ('Вольво', 3), ('Тесла', 2) ON CONFLICT DO NOTHING;

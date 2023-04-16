@@ -1,0 +1,1 @@
+INSERT INTO engine (name) VALUES ('Карбюраторный'), ('Электро'), ('Дизельный') ON CONFLICT DO NOTHING;

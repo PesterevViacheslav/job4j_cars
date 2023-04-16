@@ -16,10 +16,15 @@
         <property name="show_sql">true</property>
         <property name="format_sql">true</property>
         <property name="use_sql_comments">true</property>
+        <property name="hibernate.jdbc.time_zone">Europe/Moscow</property>
 
         <mapping class="ru.job4j.cars.model.User" />
         <mapping class="ru.job4j.cars.model.Post" />
         <mapping class="ru.job4j.cars.model.PriceHistory" />
         <mapping class="ru.job4j.cars.model.Participates" />
+        <mapping class="ru.job4j.cars.model.Engine" />
+        <mapping class="ru.job4j.cars.model.Car" />
+        <mapping class="ru.job4j.cars.model.Owner" />
+        <mapping class="ru.job4j.cars.model.HistoryOwner" />
     </session-factory>
 </hibernate-configuration>
