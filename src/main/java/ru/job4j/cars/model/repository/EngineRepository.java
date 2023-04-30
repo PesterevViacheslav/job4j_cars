@@ -2,7 +2,6 @@ package ru.job4j.cars.model.repository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import ru.job4j.cars.model.Engine;
-import ru.job4j.cars.model.User;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -21,11 +20,11 @@ public class EngineRepository {
         return engine;
     }
     /**
-     * Обновить в базе пользователя.
-     * @param user пользователь.
+     * Обновить в базе двигатель.
+     * @param engine двигатель.
      */
-    public void update(User user) {
-        crudRepository.run(session -> session.merge(user));
+    public void update(Engine engine) {
+        crudRepository.run(session -> session.merge(engine));
     }
     /**
      * Удалить двигатель по id.

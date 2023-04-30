@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS photo (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR NOT NULL,
+    ftp_path VARCHAR NOT NULL
+);
