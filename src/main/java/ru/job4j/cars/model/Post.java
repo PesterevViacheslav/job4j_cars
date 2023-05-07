@@ -46,7 +46,7 @@ public class Post {
     private Car car;
     @ManyToMany
     @JoinTable(name = "auto_post_photo",
-            joinColumns = {@JoinColumn(name = "photo_id", nullable = false)},
-            inverseJoinColumns = {@JoinColumn(name = "auto_post_id", nullable = false)})
+            joinColumns = {@JoinColumn(name = "photo_id")},
+            inverseJoinColumns = {@JoinColumn(name = "auto_post_id")})
     private List<Photo> photos = new ArrayList<>();
 }
