@@ -31,7 +31,7 @@ public class Post {
     @ManyToOne
     @JoinColumn(name = "auto_user_id")
     private User user;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "post_id")
     private List<PriceHistory> priceHistory = new ArrayList<>();
     @ManyToMany
@@ -44,9 +44,7 @@ public class Post {
     @OneToOne
     @JoinColumn(name = "car_id")
     private Car car;
-    @ManyToMany
-    @JoinTable(name = "auto_post_photo",
-            joinColumns = {@JoinColumn(name = "photo_id")},
-            inverseJoinColumns = {@JoinColumn(name = "auto_post_id")})
-    private List<Photo> photos = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "auto_post_id")
+    private List<PostPhoto> postPhotos = new ArrayList<>();
 }
