@@ -26,7 +26,7 @@ public class Car {
     private String name;
     @ManyToOne
     @JoinColumn(name = "engine_id")
-    private Engine engineId;
+    private Engine engine;
     @ManyToMany
     @JoinTable(name = "history_owner",
             joinColumns = {@JoinColumn(name = "owner_id", nullable = false)},

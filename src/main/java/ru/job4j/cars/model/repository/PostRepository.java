@@ -1,28 +1,34 @@
 package ru.job4j.cars.model.repository;
-import lombok.AllArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import ru.job4j.cars.model.Engine;
 import ru.job4j.cars.model.Post;
-
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
 @Repository
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class PostRepository {
+    @NonNull
     private final CrudRepository crudRepository;
     private LocalDateTime created = LocalDateTime.now().minus(1, ChronoUnit.DAYS);
     /**
      * Объявления за последний день
      * @return объявления.
      */
+    public Post create(Post post) {
+        crudRepository.run(session -> session.persist(post));
+        return post;
+    }
     public List<Post> findAllForLastDay() {
         return crudRepository.query(
                 """
-                        SELECT DISTINCT p FROM Post p
-                        JOIN FETCH p.auto_user u
-                        JOIN FETCH p.car c
-                        LEFT JOIN FETCH p.photo f
+                        FROM Post p
+                        JOIN FETCH p.car.engine e
+                        JOIN FETCH p.user u
+                        LEFT JOIN FETCH p.postPhotos f
                         WHERE p.created >= :fCreated
                         """,
                 Post.class,
@@ -35,10 +41,10 @@ public class PostRepository {
     public List<Post> findAllWithPhoto() {
         return crudRepository.query(
                 """
-                        SELECT DISTINCT p FROM Post p
-                        JOIN FETCH p.auto_user u
-                        JOIN FETCH p.car c
-                        JOIN FETCH p.photo f
+                        FROM Post p
+                        JOIN FETCH p.user u
+                        JOIN FETCH p.car.engine e
+                        JOIN FETCH p.postPhotos f
                         """,
                 Post.class);
     }
@@ -49,10 +55,10 @@ public class PostRepository {
     public List<Post> findAllByBrand(String brand) {
         return crudRepository.query(
                 """
-                        SELECT DISTINCT p FROM Post p
-                        JOIN FETCH p.auto_user u
+                        FROM Post p
+                        JOIN FETCH p.user u
                         JOIN FETCH p.car c
-                        LEFT JOIN FETCH p.photo f
+                        LEFT JOIN FETCH p.postPhotos f
                         WHERE c.name = :fAutoName
                         """,
                 Post.class,
